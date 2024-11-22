@@ -1,6 +1,6 @@
 <?php
 session_start(); // Start the session
-
+include ('config.php');
 // Redirect to login if the user is not logged in
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
@@ -9,6 +9,14 @@ if (!isset($_SESSION['user_id'])) {
 
 // Fetch user information from the session
 $username = $_SESSION['username'];
+
+//fetch course information from the database
+$sql = "SELECT course_name, description FROM courses";
+$sql = "SELECT course_name, description, image_path FROM courses";
+$result = $conn->query($sql);
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -37,36 +45,26 @@ $username = $_SESSION['username'];
     
     <main>
     <div class="progress-bar"></div>
-  <section>
+    <section>
     <h1>Courses</h1>
     <div class="card-container">
-      <div class="card">
-        <h2>PHP</h2>
-        <img src="/CSS PICS/php.jpg" alt="PHP" />
-        <p>Learn PHP concepts and applications.</p>
-      </div>
-      <div class="card">
-        <h2>Web Development</h2>
-        <img src="/CSS PICS/web-development1.png" alt="Island" />
-        <p>A beginner-friendly guide to web development.</p>
-      </div>
-      <div class="card">
-        <h2>Java OOP</h2>
-        <img src="/CSS PICS/Java-Logo.png" alt="Nature" />
-        <p>An introduction to Java.</p>
-      </div>
-      <div class="card">
-        <h2>AI and Machine Learning</h2>
-        <img src="/CSS PICS/AI_part_1.jpg" alt="Mount Fuji" />
-        <p>Dive into artificial intelligence and machine learning.</p>
-      </div>
-      <div class="card">
-        <h2>DBMS</h2>
-        <img src="/CSS PICS/dbms.png" alt="Sunrise" />
-        <p>Learn the basics and advanced applications of DBMS</p>
-      </div>
-      
-  </section>
+        <?php
+        // Check if courses exist
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                echo '<div class="card">';
+                echo '<img src="' . htmlspecialchars($row["image_path"]) . '" alt="' . htmlspecialchars($row["course_name"]) . '">';
+                echo '<h2>' . htmlspecialchars($row["course_name"]) . '</h2>';
+                echo '<p>' . htmlspecialchars($row["description"]) . '</p>';
+                echo '</div>';
+            }
+        } else {
+            echo "<p>No courses available at the moment. Please check back later!</p>";
+        }
+        ?>
+    </div>
+</section>
+
     </main>
 </body>
 </html>
