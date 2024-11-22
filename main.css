@@ -17,7 +17,7 @@ header h1 {
     margin: 0;
     font-size: 24px;
     text-align: center;
-    flex: 1; /* Allows centering within header */
+    flex: 1; 
 }
 header h2{
     font-size: 20px;
@@ -26,12 +26,12 @@ header h2{
 .dropdown {
     position: relative;
     display: inline-block;
-    margin-left: auto; /* Push the dropdown to the far right */
+    margin-left: auto; 
 }
 .dropdown-toggle {
     background: none;
     border: none;
-    color: #fff; /* Change the color to match the header */
+    color: #fff; 
     font-size: 20px;
     cursor: pointer;
 }
