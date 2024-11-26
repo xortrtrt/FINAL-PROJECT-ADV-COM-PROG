@@ -34,33 +34,41 @@ if (!$course) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles/course_details.css" type="text/css">
     <title><?php echo htmlspecialchars($course['course_name']); ?> - Course Details</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/main.css"> 
+    <link href="https://fonts.googleapis.com/css?family=Arvo&display=swap" rel="stylesheet"> 
 </head>
 <body>
-    <header>
-        <h1>Course Details</h1>
-        <h2>Hello, <?php echo htmlspecialchars($_SESSION['username']); ?>!</h2>
-        <div class="dropdown">
-            <button class="dropdown-toggle">▼</button>
-            <div class="dropdown-menu">
-                <a href="main.php">Main Page</a>
-                <a href="profile.php">View Profile</a>
-                <a href="enrollments.php">My Enrollments</a>
-                <a href="logout.php">Logout</a>
-            </div>
-        </div>
+<header>
+        <h1>COURSE ENROLLMENT</h1>
+        <nav role="navigation" class="primary-navigation">
+        <ul>
+        <li><a href="main.php">Home</a></li>
+        <li><a href="profile.php">Profile &dtrif;</a>
+        <ul class="dropdown">
+        <li><a href="logout.php">Logout</a></li>
+      </ul>
+    </li>
+    <li><a href="enrollments.php">Enrollments</a></li>
+  </ul>
+</nav>
     </header>
 
     <main>
+        <section>
         <h2><?php echo htmlspecialchars($course['course_name']); ?></h2>
-        <img src="<?php echo htmlspecialchars($course['image_path']); ?>" alt="<?php echo htmlspecialchars($course['course_name']); ?>" style="max-width: 100%; height: auto;">
-        <p><?php echo htmlspecialchars($course['description']); ?></p>
-        
+        <img class="course-image" src="<?php echo htmlspecialchars($course['image_path']); ?>" alt="<?php echo htmlspecialchars($course['course_name']); ?>">
+        <p class="course-description"><?php echo htmlspecialchars($course['description']); ?></p>
+        </section>
         <!-- Enroll Button -->
         <?php if (isset($_SESSION['user_id'])): ?>
-            <form method="POST" action="enroll.php">
-                <input type="hidden" name="course_id" value="<?php echo $course_id; ?>">
-                <button type="submit">Enroll in this Course</button>
-            </form>
+            <form method="POST" action="enroll.php" class="center-form">
+    <input type="hidden" name="course_id" value="<?php echo $course_id; ?>">
+    <button type="submit">Enroll in this Course</button>
+</form>
+
         <?php else: ?>
             <p>Please <a href="login.php">log in</a> to enroll in this course.</p>
         <?php endif; ?>
