@@ -17,7 +17,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 ?>
 
-<!-- Registration Form -->
 <form method="post" action="">
     <label>Username:</label>
     <input type="text" name="username" required>
