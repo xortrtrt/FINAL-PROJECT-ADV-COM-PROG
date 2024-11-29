@@ -5,47 +5,40 @@ class Database {
     private $username = "root";
     private $password = "";
     private $dbname = "skill_development_portal";
-    private $conn;
+   
+
+    private $db;
 
     public function __construct() {
-        $this->connect();
-    }
-
-    private function connect() {
         try {
-            $this->conn = new PDO("mysql:host=$this->host;dbname=$this->dbname", $this->username, $this->password);
-            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // Enable exception mode for errors
+            $this->db = new PDO("mysql:host=$this->host;dbname=$this->dbname", $this->username, $this->password);
+            $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);  
         } catch (PDOException $e) {
-            die("Connection failed: " . $e->getMessage());
+            echo "Connection failed: " . $e->getMessage();
         }
     }
 
     public function runQuery($query, $params = []) {
-        try {
-            $stmt = $this->conn->prepare($query);
-            $stmt->execute($params); 
-            return $stmt;
-        } catch (PDOException $e) {
-            die("Query failed: " . $e->getMessage()); 
-        }
-    }
-
-    public function fetchSingle($query, $params = []) {
-        try {
-            $stmt = $this->runQuery($query, $params);
-            return $stmt->fetch(PDO::FETCH_ASSOC); 
-        } catch (PDOException $e) {
-            die("Fetch single row failed: " . $e->getMessage()); 
-        }
+        $stmt = $this->db->prepare($query);
+        $stmt->execute($params);
+        return $stmt;
     }
 
     public function fetchResults($query, $params = []) {
-        try {
-            $stmt = $this->runQuery($query, $params);
-            return $stmt->fetchAll(PDO::FETCH_ASSOC); 
-        } catch (PDOException $e) {
-            die("Fetch multiple rows failed: " . $e->getMessage()); 
-        }
+        $stmt = $this->db->prepare($query);
+        $stmt->execute($params);
+        return $stmt->fetchAll();
+    }
+
+    public function fetchSingle($query, $params = []) {
+        $stmt = $this->db->prepare($query);
+        $stmt->execute($params);
+        return $stmt->fetch();
+    }
+
+    public function prepare($query) {
+        return $this->db->prepare($query);
     }
 }
 
