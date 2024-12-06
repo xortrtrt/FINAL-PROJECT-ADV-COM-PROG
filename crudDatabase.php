@@ -3,27 +3,25 @@ require_once('config.php');
 class CrudDatabase {
     private $db;  
 
-    // Constructor to create an instance of the Database class
     public function __construct() {
-        // Initialize Database object to handle DB operations
         $this->db = new Database();
     }
 
     public function createUser($username, $password, $email, $age) {
         $query = "INSERT INTO users (username, password, email, age) VALUES (?, ?, ?, ?)";
         $params = [$username, $password, $email, $age];
-        return $this->db->runQuery($query, $params);  // Execute the query
+        return $this->db->runQuery($query, $params);  
     }
 
     public function getUserByUsername($username) {
         $query = "SELECT * FROM users WHERE username = ?";
         $params = [$username];
-        return $this->db->fetchSingle($query, $params);  // Fetch a single record
+        return $this->db->fetchSingle($query, $params);  
     }
 
     public function getAllUsers() {
         $query = "SELECT * FROM users";
-        return $this->db->fetchResults($query);  // Fetch all users
+        return $this->db->fetchResults($query); 
     }
 
     public function getCourseById($course_id) {
@@ -43,7 +41,6 @@ class CrudDatabase {
         $params = [$user_id, $course_id];
         $result = $this->db->fetchSingle($query, $params);  
 
-            //To check if the user is already enrolled in the course
         if ($result['COUNT(*)'] > 0) {
             return false;  
         }
@@ -64,19 +61,16 @@ class CrudDatabase {
         return $this->db->fetchResults($query, $params);
     }
 
-    public function searchCourses($user_id, $query) {
-        $sql = "SELECT c.course_id, c.course_name, c.description, c.image_path
-                FROM courses c
-                JOIN enrollments e ON e.course_id = c.course_id
-                WHERE e.user_id = :user_id AND c.course_name LIKE :query";
 
-        $stmt = $this->db->prepare($sql);
-        $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
-        $stmt->bindValue(':query', '%' . $query . '%', PDO::PARAM_STR);
+    public function searchAvailableCourses($searchTerm) {    
+        $query = "SELECT course_id, course_name, description, image_path FROM courses WHERE course_name LIKE :searchTerm";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(':searchTerm', '%' . $searchTerm . '%', PDO::PARAM_STR); 
         $stmt->execute();
-
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $courses = $stmt->fetchAll(PDO::FETCH_ASSOC);    
+        return $courses;
     }
+    
     public function getCourseDetails($course_id) {
         $stmt = $this->db->prepare("SELECT * FROM courses WHERE course_id = ?");
         $stmt->execute([$course_id]);
@@ -96,12 +90,37 @@ class CrudDatabase {
     public function getTopicDescription($topic_id) {
         $query = "SELECT topic_description FROM topics WHERE topic_id = :topic_id";
         $stmt = $this->db->prepare($query);
-        $stmt->bindParam(':topic_id', $topic_id, PDO::PARAM_INT); // Bind parameter
+        $stmt->bindParam(':topic_id', $topic_id, PDO::PARAM_INT); 
         $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC); // Fetch the result
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
     
+    public function getUserDetails($user_id) {
+        $query = "SELECT username, email, age, created_at FROM users WHERE user_id = ?";
+        $params = [$user_id];
     
+        return $this->db->fetchSingle($query, $params); 
+    }
     
+    public function updateUserEmail($user_id, $newEmail) {
+        $query = "UPDATE users SET email = :email WHERE user_id = :user_id";
+        $stmt = $this->db->prepare($query);  
+
+        $stmt->bindParam(':email', $newEmail, PDO::PARAM_STR);
+        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+
+        if ($stmt->execute()) {
+            return "Email updated successfully.";
+        } else {
+            return "Error updating email.";
+        }
+    }
+
 }
+    
+   
+    
+
+
+
 ?>

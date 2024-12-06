@@ -2,7 +2,7 @@
 require_once('crudDatabase.php');
 
 if (isset($_GET['topic_id'])) {
-    $topic_id = intval($_GET['topic_id']); // Sanitize input
+    $topic_id = intval($_GET['topic_id']); 
     $crud = new CrudDatabase();
 
     $topicDetails = $crud->getTopicDescription($topic_id);

@@ -19,6 +19,7 @@ $crud = new CrudDatabase();
 $courseDetails = $crud->getCourseDetails($course_id); 
 $topics = $crud->getCourseTopics($course_id);  
 
+
 ?>
 
 <!DOCTYPE html>
@@ -31,69 +32,69 @@ $topics = $crud->getCourseTopics($course_id);
     <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Arvo&display=swap" rel="stylesheet">
     <script>
-  function loadTopicContent(topic_id) {
-    const xhr = new XMLHttpRequest();
-    xhr.open("GET", `getTopicDescription.php?topic_id=${encodeURIComponent(topic_id)}`, true);
+        function loadTopicContent(topic_id) {
+            const xhr = new XMLHttpRequest();
+            xhr.open("GET", `getTopicDescription.php?topic_id=${encodeURIComponent(topic_id)}`, true);
 
-    xhr.onload = function () {
-        const contentDiv = document.getElementById('topic-content');
-        if (xhr.status === 200) {
-            try {
-                const data = JSON.parse(xhr.responseText);
-                contentDiv.innerHTML = `<p>${data.success ? data.content : "Error: " + data.content}</p>`;
-            } catch {
-                contentDiv.innerHTML = `<p class="error">Invalid response format.</p>`;
-            }
-        } else {
-            contentDiv.innerHTML = `<p class="error">Failed to load content. Please try again.</p>`;
+            xhr.onload = function () {
+                const contentDiv = document.getElementById('topic-content');
+                if (xhr.status === 200) {
+                    try {
+                        const data = JSON.parse(xhr.responseText);
+                        contentDiv.innerHTML = `<p>${data.success ? data.content : "Error: " + data.content}</p>`;
+                    } catch {
+                        contentDiv.innerHTML = `<p class="error">Invalid response format.</p>`;
+                    }
+                } else {
+                    contentDiv.innerHTML = `<p class="error">Failed to load content. Please try again.</p>`;
+                }
+            };
+
+            xhr.onerror = function () {
+                document.getElementById('topic-content').innerHTML = `<p class="error">Network error. Please try again later.</p>`;
+            };
+
+            xhr.send();
         }
-    };
-
-    xhr.onerror = function () {
-        document.getElementById('topic-content').innerHTML = `<p class="error">Network error. Please try again later.</p>`;
-    };
-
-    xhr.send();
-}
-
-
-</script>
-    
+    </script>
 </head>
 <body>
 <header>
     <h1><?php echo htmlspecialchars($courseDetails['course_name']); ?> Topics</h1>
     <nav role="navigation" class="primary-navigation">
         <ul>
-        <li><a href="main.php">Home</a></li>
-        <li><a href="profile.php">Profile &dtrif;</a>
-        <ul class="dropdown">
-        <li><a href="logout.php">Logout</a></li>
-      </ul>
-    </li>
-    <li><a href="enrollments.php">Enrollments</a></li>
-  </ul>
-</nav>
+            <li><a href="main.php">Home</a></li>
+            <li><a href="profile.php">Profile &dtrif;</a>
+                <ul class="dropdown">
+                    <li><a href="logout.php">Logout</a></li>
+                </ul>
+            </li>
+            <li><a href="enrollments.php">Enrollments</a></li>
+        </ul>
+    </nav>
 </header>
 
 <main>
     <div class="topics-container">
-    <ul class="topics-tabs" id="topics-tabs">
-    <?php
-    if ($topics) {
-        foreach ($topics as $topic) {
-            echo '<li onclick="loadTopicContent(' . intval($topic['topic_id']) . ')">'
-                . htmlspecialchars($topic['topic_title']) . '</li>';
-        }
-    } else {
-        echo "<p>No topics available for this course.</p>";
-    }
-    ?>
-</ul>
+        <ul class="topics-tabs" id="topics-tabs">
+            <?php
+            if ($topics) {
+                foreach ($topics as $topic) {
+                    echo '<li onclick="loadTopicContent(' . intval($topic['topic_id']) . ')">'
+                        . htmlspecialchars($topic['topic_title']) . '</li>';
+                }
+            } else {
+                echo "<p>No topics available for this course.</p>";
+            }
+            ?>
+        </ul>
         <div class="topic-content" id="topic-content">
             <p>Select a topic to view details.</p>
         </div>
     </div>
+
 </main>
+
+
 </body>
 </html>

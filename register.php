@@ -13,24 +13,37 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $crud->createUser($username, $password, $email, $age);
     echo "User registered successfully!";
     header("Location: login.php");
-
 }
 ?>
 
-<form method="post" action="">
-    <label>Username:</label>
-    <input type="text" name="username" required>
-    <label>Email:</label>
-    <input type="email" name="email" required>
-    <label>Password:</label>
-    <input type="password" name="password" required>
-    <label>Age:</label>
-    <input type="number" name="age" required>
-    <button type="submit">Register</button>
-</form>
-
-<?php
-
-echo 'Click here to ' . "<a href='login.php'>login </a>" . 'instead';
-
-?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="styles/register.css">
+</head>
+<body>
+    <div class="register-container">
+        <h1>Register</h1>
+        <form method="post" action="">
+            <label>Username:</label>
+            <input type="text" name="username" required>
+            
+            <label>Email:</label>
+            <input type="email" name="email" required>
+            
+            <label>Password:</label>
+            <input type="password" name="password" required>
+            
+            <label>Age:</label>
+            <input type="number" name="age" required>
+            
+            <button type="submit">Register</button>
+        </form>
+        
+        <p>Already have an account? <a href="login.php">Login here</a></p>
+    </div>
+</body>
+</html>

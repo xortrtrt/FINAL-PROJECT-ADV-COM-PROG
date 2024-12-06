@@ -153,3 +153,25 @@ nav {
   
    ul li ul li a { transition: all 0.5s ease; }
   
+   .unenroll-button {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.unenroll-button:hover {
+    background-color: #e60000;
+}
+
+.error {
+    color: red;
+    margin-top: 10px;
+}
+
+.unenroll-container {
+    margin-top: 20px;
+}
