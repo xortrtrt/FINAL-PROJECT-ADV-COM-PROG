@@ -66,5 +66,7 @@ $courses = $crud->getUserEnrollments($user_id);
         </div>
     </section>
 </main>
+<p class="about-us"><a href="about_us.php">About Us</a></p>
+
 </body>
 </html>

@@ -8,10 +8,29 @@ class CrudDatabase {
     }
 
     public function createUser($username, $password, $email, $age) {
-        $query = "INSERT INTO users (username, password, email, age) VALUES (?, ?, ?, ?)";
-        $params = [$username, $password, $email, $age];
-        return $this->db->runQuery($query, $params);  
+        // Check if username or email already exists
+        $sql = "SELECT COUNT(*) FROM users WHERE username = :username OR email = :email";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+    
+        if ($stmt->fetchColumn() > 0) {
+            // Redirect to register.php if username or email is duplicate
+            header("Location: register.php?error=duplicate");
+            exit(); // Ensure the script stops executing after the redirect
+        }
+    
+        // If no duplicates, proceed with the insert
+        $sql = "INSERT INTO users (username, password, email, age) VALUES (:username, :password, :email, :age)";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':password', $password);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':age', $age);
+        $stmt->execute();
     }
+    
 
     public function getUserByUsername($username) {
         $query = "SELECT * FROM users WHERE username = ?";

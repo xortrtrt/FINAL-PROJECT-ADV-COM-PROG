@@ -3,7 +3,7 @@ session_start();
 require_once('crudDatabase.php'); 
 
 if (!isset($_SESSION['user_id'])) {
-    header("Location: enrollments.php");
+    header("Location: login.php");
     exit();
 }
 

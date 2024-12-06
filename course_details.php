@@ -1,11 +1,10 @@
 <?php
-
 session_start(); 
-require_once('crudDatabase.php');  
+require_once('crudDatabase.php');
 
-if (!isset($_SESSION['username'])) {
-    echo "You need to be logged in to enroll in a course.";
-    exit();  
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
 }
 
 $course_id = isset($_GET['course_id']) ? (int)$_GET['course_id'] : 0;

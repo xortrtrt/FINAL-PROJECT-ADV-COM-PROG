@@ -132,3 +132,10 @@ a {
  
 }
 
+.about-us {
+    position: fixed;
+    padding: 10px 20px;
+    bottom: 20px; 
+    right: 0.01%;
+
+}

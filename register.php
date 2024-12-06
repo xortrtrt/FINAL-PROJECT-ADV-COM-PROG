@@ -14,6 +14,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     echo "User registered successfully!";
     header("Location: login.php");
 }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -44,6 +46,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </form>
         
         <p>Already have an account? <a href="login.php">Login here</a></p>
+
+        <?php
+        if (isset($_GET['error']) && $_GET['error'] === 'duplicate') {
+        echo "<p style='color:red;'>Username or email already exists. Please choose another one.</p>";
+        }
+    ?>
+
+        <p class="about-us"><a href="about_us.php">About Us</a></p>
+
     </div>
+
+    
 </body>
+
+
 </html>

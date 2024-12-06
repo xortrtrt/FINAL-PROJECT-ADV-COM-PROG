@@ -35,10 +35,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <h2>Login</h2>
 
-<?php if (isset($error)): ?>
-    <p style="color: red;"><?php echo htmlspecialchars($error); ?></p>
-<?php endif; ?>
-
 <form method="post" action="">
     <label for="username">Username:</label>
     <input type="text" name="username" id="username" required>
@@ -52,4 +48,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <p class="register-link">Don't have an account? <a href="register.php">Register here</a></p>
 
 </body>
+
+<footer>
+<p class="about-us"><a href="about_us.php">About Us</a></p>
+
+</footer>
 </html>

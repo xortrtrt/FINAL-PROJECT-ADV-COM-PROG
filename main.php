@@ -109,5 +109,8 @@ $courses = $crud->getAllCourses();
             });
         });
     </script>
+
+<p class="about-us"><a href="about_us.php">About Us</a></p>
+
 </body>
 </html>

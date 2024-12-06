@@ -155,7 +155,7 @@ nav {
   
    .unenroll-button {
     position: fixed;
-    bottom: 20px;  /* Adjust the distance from the bottom */
+    bottom: 20px; 
     left: 50%;
     transform: translateX(-50%);
     background-color: #e74c3c;
@@ -168,4 +168,12 @@ nav {
 
 .unenroll-button:hover {
     background-color: #c0392b;
+}
+.about-us {
+  position: fixed;
+  padding: 10px 20px;
+  bottom: 20px; 
+  right: 0.01%;
+
+
 }

@@ -97,12 +97,15 @@ $topics = $crud->getCourseTopics($course_id);
             <p>Select a topic to view details.</p>
         </div>
     </div>
-
     <!-- Unenroll Button -->
     <form method="POST" action="course_topics.php?course_id=<?php echo htmlspecialchars($course_id); ?>">
         <button type="submit" name="unenroll" class="unenroll-button">Unenroll from this course</button>
     </form>
-</main>
 
+    
+
+
+</main>
+<p class="about-us"><a href="about_us.php">About Us</a></p>
 </body>
 </html>
