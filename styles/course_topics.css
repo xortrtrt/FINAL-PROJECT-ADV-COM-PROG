@@ -154,24 +154,18 @@ nav {
    ul li ul li a { transition: all 0.5s ease; }
   
    .unenroll-button {
-    background-color: #ff4d4d;
+    position: fixed;
+    bottom: 20px;  /* Adjust the distance from the bottom */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #e74c3c;
     color: white;
-    border: none;
-    padding: 10px 15px;
-    cursor: pointer;
+    padding: 10px 20px;
     font-size: 16px;
-    border-radius: 5px;
+    border: none;
+    cursor: pointer;
 }
 
 .unenroll-button:hover {
-    background-color: #e60000;
-}
-
-.error {
-    color: red;
-    margin-top: 10px;
-}
-
-.unenroll-container {
-    margin-top: 20px;
+    background-color: #c0392b;
 }

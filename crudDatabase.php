@@ -116,11 +116,26 @@ class CrudDatabase {
         }
     }
 
+
+    public function unenrollFromCourse($user_id, $course_id) {
+        // Prepare the DELETE query
+        $query = "DELETE FROM enrollments WHERE user_id = :user_id AND course_id = :course_id";
+        
+        // Prepare the statement
+        $stmt = $this->db->prepare($query);
+        
+        // Bind the parameters
+        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        $stmt->bindParam(':course_id', $course_id, PDO::PARAM_INT);
+        
+        // Execute the statement
+        return $stmt->execute();
+    }
+
+
 }
     
-   
+
     
-
-
-
+   
 ?>

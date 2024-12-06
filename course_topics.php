@@ -15,11 +15,16 @@ if (isset($_GET['course_id'])) {
 $course_id = $_GET['course_id']; 
 $user_id = $_SESSION['user_id']; 
 
+// Handle unenrollment
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['unenroll'])) {
+    $crud->unenrollFromCourse($user_id, $course_id);
+    header("Location: enrollments.php"); // Redirect after unenrollment
+    exit();
+}
+
 $crud = new CrudDatabase();
 $courseDetails = $crud->getCourseDetails($course_id); 
 $topics = $crud->getCourseTopics($course_id);  
-
-
 ?>
 
 <!DOCTYPE html>
@@ -93,8 +98,11 @@ $topics = $crud->getCourseTopics($course_id);
         </div>
     </div>
 
+    <!-- Unenroll Button -->
+    <form method="POST" action="course_topics.php?course_id=<?php echo htmlspecialchars($course_id); ?>">
+        <button type="submit" name="unenroll" class="unenroll-button">Unenroll from this course</button>
+    </form>
 </main>
-
 
 </body>
 </html>
